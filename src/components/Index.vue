@@ -1,3 +1,4 @@
+/* eslint-disable */ 
 <template>
     <div class="hold-transition layout-top-nav">
       <div class="wrapper">
@@ -17,7 +18,7 @@
                       <div class="small-box text-white" style="background-color:#ff4d4d">
                         <div class="inner">
                           <h4>{{ formatPrice(message.cases) }} </h4>
-                          <p>Cases</p> 
+                          <p>Cases</p>
                         </div>
                           <img src="@/assets/doctors_bag.png" style="right:15px;top:10px;position:absolute">
                       </div>
@@ -27,7 +28,7 @@
                       <div class="small-box bg-success">
                         <div class="inner">
                          <h4>{{ formatPrice(message.deaths) }} </h4>
-                          <p>Deaths</p> 
+                          <p>Deaths</p>
                         </div>
                          <img src="@/assets/empty_bed.png" style="right:15px;top:10px;position:absolute">
                       </div>
@@ -37,10 +38,16 @@
                       <div class="small-box text-white">
                         <div class="inner" style="background-color:#00cc99">
                           <h4>{{ formatPrice(message.recovered) }} </h4>
-                          <p>Recovered</p> 
+                          <p>Recovered</p>
                         </div>
                          <img src="@/assets/recovery.png" style="right:15px;top:10px;position:absolute">
                       </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-lg-6 col-12">
+                      <charts :options="chartOptions"></charts>
                     </div>
                   </div>
                 </div>
@@ -59,16 +66,37 @@
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import MoneyFormat from 'vue-money-format'
+
+
+
 export default {
+
     data(){
       return {
         message: {
           cases: "",
           deaths: "",
-        }
+        },   
+        chartOptions: {
+          chart: {
+            type: 'bar'
+          },
+          title: {
+            text: 'Today Cases'
+          },
+          series: [{
+            data: [1,2,3] // sample data
+          }]
+      } 
+       
       }  
     },
     methods: {
+      allData() {
+        axios.get('https://corona.lmao.ninja/all').catch(err => console.log(err)).then(data => {
+            this.message = data.data;
+        })
+      },
       allData() {
         axios.get('https://corona.lmao.ninja/all').catch(err => console.log(err)).then(data => {
             this.message = data.data;
