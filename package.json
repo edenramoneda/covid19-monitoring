@@ -12,10 +12,12 @@
   },
   "dependencies": {
     "admin-lte": "^3.0.2",
+    "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.7.0",
-    "v-money": "^0.8.1",
     "vue": "^2.6.11",
+    "vue-axios": "^2.1.5",
+    "vue-money-format": "^1.1.1",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
