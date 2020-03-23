@@ -11,6 +11,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@cookieseater/vue-adminlte3": "github:CookiesEater/vue-adminlte3",
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.7.0",
     "v-money": "^0.8.1",
