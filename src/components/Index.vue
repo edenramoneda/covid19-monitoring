@@ -2,20 +2,15 @@
 <template>
     <div class="hold-transition layout-top-nav">
       <div class="wrapper">
-          <nav class="main-header navbar navbar-expand navbar-info text-center">
-            <div class="container">
-                <h2 class="text-white">COVID-19 Monitoring</h2>
-            </div>
-          </nav>
-
-          <div class="content-wrapper bg-dark">
+          <div class="content-wrapper custom-container">
             <div class="content">
-              <div class="container bg-white">
-                <div class="container">
+              <div class="container custom-container-2">
+                <h2 class="text-white text-center"><b>COVID-19</b> Tracker</h2><br>
+                <div class="container-fluid">
                   <div class="row" style="margin-left:15%">
                     <div class="col-lg-3 col-12 mt-3">
                       <!-- small box -->
-                      <div class="small-box text-white" style="background-color:#ff4d4d">
+                      <div class="small-box text-white" style="background-color:#ff5050;">
                         <div class="inner">
                           <h4>{{ formatPrice(message.cases) }} </h4>
                           <p>Total Cases</p>
@@ -46,8 +41,20 @@
                   </div>
                   <br>
                   <div class="row">
+                    <div class="col-lg-6 col-12">
+                      <charts :options="chartOptions" style="width:100%"></charts>
+                    </div>
+                     <div class="col-lg-6 col-12">
+                      <charts :options="lineChart" style="width:100%"></charts>
+                    </div>
+                  </div>
+                  <div class="row">
                     <div class="col-lg-12 col-12">
-                      <charts :options="chartOptions" style="height: 900px"></charts>
+                      <mdb-datatable
+                        :data="data"
+                        striped
+                        bordered
+                      />
                     </div>
                   </div>
                 </div>
@@ -59,101 +66,706 @@
 </template>
 
 <style scoped>
-@import 'admin-lte/dist/css/adminlte.css';
+@import "admin-lte/dist/css/adminlte.css";
+
+.custom-container {
+  background: #1a2980; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to top,
+    #26d0ce,
+    #1a2980
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to top,
+    #26d0ce,
+    #1a2980
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  height:100vh;
+}
+.custom-container-2 {
+  height:100vh;
+  background: #1a2980; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to top,
+    #26d0ce,
+    #1a2980
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to top,
+    #26d0ce,
+    #1a2980
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  -webkit-box-shadow: 0px -1px 11px 5px rgba(0, 0, 0, 0.73);
+  -moz-box-shadow: 0px -1px 11px 5px rgba(0, 0, 0, 0.73);
+  box-shadow: 0px -1px 11px 5px rgba(0, 0, 0, 0.73);
+}
+
 </style>
 
 <script>
-import axios from 'axios'
-import VueAxios from 'vue-axios'
-import MoneyFormat from 'vue-money-format'
+import axios from "axios";
+import VueAxios from "vue-axios";
+import MoneyFormat from "vue-money-format";
 export default {
-
-    data(){
-      return {
-        message: {
-          cases: "",
-          deaths: "",
-          recovered: "",
-        },   
-        chartOptions: {
-          chart: {
-            type: 'bar'
-          },
+  data() {
+    return {
+      data: {
+          columns: [
+            {
+              label: 'Name',
+              field: 'name',
+              sort: 'asc'
+            },
+            {
+              label: 'Position',
+              field: 'position',
+              sort: 'asc'
+            },
+            {
+              label: 'Office',
+              field: 'office',
+              sort: 'asc'
+            },
+            {
+              label: 'Age',
+              field: 'age',
+              sort: 'asc'
+            },
+            {
+              label: 'Start date',
+              field: 'date',
+              sort: 'asc'
+            },
+            {
+              label: 'Salary',
+              field: 'salary',
+              sort: 'asc',
+              format: value => '£' + value
+            }
+          ],
+          rows: [
+            {
+              name: 'Tiger Nixon',
+              position: 'System Architect',
+              office: 'Edinburgh',
+              age: '61',
+              date: '2011/04/25',
+              salary: '320'
+            },
+            {
+              name: 'Garrett Winters',
+              position: 'Accountant',
+              office: 'Tokyo',
+              age: '63',
+              date: '2011/07/25',
+              salary: '170'
+            },
+            {
+              name: 'Ashton Cox',
+              position: 'Junior Technical Author',
+              office: 'San Francisco',
+              age: '66',
+              date: '2009/01/12',
+              salary: '86'
+            },
+            {
+              name: 'Cedric Kelly',
+              position: 'Senior Javascript Developer',
+              office: 'Edinburgh',
+              age: '22',
+              date: '2012/03/29',
+              salary: '433'
+            },
+            {
+              name: 'Airi Satou',
+              position: 'Accountant',
+              office: 'Tokyo',
+              age: '33',
+              date: '2008/11/28',
+              salary: '162'
+            },
+            {
+              name: 'Brielle Williamson',
+              position: 'Integration Specialist',
+              office: 'New York',
+              age: '61',
+              date: '2012/12/02',
+              salary: '372'
+            },
+            {
+              name: 'Herrod Chandler',
+              position: 'Sales Assistant',
+              office: 'San Francisco',
+              age: '59',
+              date: '2012/08/06',
+              salary: '137'
+            },
+            {
+              name: 'Rhona Davidson',
+              position: 'Integration Specialist',
+              office: 'Tokyo',
+              age: '55',
+              date: '2010/10/14',
+              salary: '327'
+            },
+            {
+              name: 'Colleen Hurst',
+              position: 'Javascript Developer',
+              office: 'San Francisco',
+              age: '39',
+              date: '2009/09/15',
+              salary: '205'
+            },
+            {
+              name: 'Sonya Frost',
+              position: 'Software Engineer',
+              office: 'Edinburgh',
+              age: '23',
+              date: '2008/12/13',
+              salary: '103'
+            },
+            {
+              name: 'Jena Gaines',
+              position: 'Office Manager',
+              office: 'London',
+              age: '30',
+              date: '2008/12/19',
+              salary: '90'
+            },
+            {
+              name: 'Quinn Flynn',
+              position: 'Support Lead',
+              office: 'Edinburgh',
+              age: '22',
+              date: '2013/03/03',
+              salary: '342'
+            },
+            {
+              name: 'Charde Marshall',
+              position: 'Regional Director',
+              office: 'San Francisco',
+              age: '36',
+              date: '2008/10/16',
+              salary: '470'
+            },
+            {
+              name: 'Haley Kennedy',
+              position: 'Senior Marketing Designer',
+              office: 'London',
+              age: '43',
+              date: '2012/12/18',
+              salary: '313'
+            },
+            {
+              name: 'Tatyana Fitzpatrick',
+              position: 'Regional Director',
+              office: 'London',
+              age: '19',
+              date: '2010/03/17',
+              salary: '385'
+            },
+            {
+              name: 'Michael Silva',
+              position: 'Marketing Designer',
+              office: 'London',
+              age: '66',
+              date: '2012/11/27',
+              salary: '198'
+            },
+            {
+              name: 'Paul Byrd',
+              position: 'Chief Financial Officer (CFO)',
+              office: 'New York',
+              age: '64',
+              date: '2010/06/09',
+              salary: '725'
+            },
+            {
+              name: 'Gloria Little',
+              position: 'Systems Administrator',
+              office: 'New York',
+              age: '59',
+              date: '2009/04/10',
+              salary: '237'
+            },
+            {
+              name: 'Bradley Greer',
+              position: 'Software Engineer',
+              office: 'London',
+              age: '41',
+              date: '2012/10/13',
+              salary: '132'
+            },
+            {
+              name: 'Dai Rios',
+              position: 'Personnel Lead',
+              office: 'Edinburgh',
+              age: '35',
+              date: '2012/09/26',
+              salary: '217'
+            },
+            {
+              name: 'Jenette Caldwell',
+              position: 'Development Lead',
+              office: 'New York',
+              age: '30',
+              date: '2011/09/03',
+              salary: '345'
+            },
+            {
+              name: 'Yuri Berry',
+              position: 'Chief Marketing Officer (CMO)',
+              office: 'New York',
+              age: '40',
+              date: '2009/06/25',
+              salary: '675'
+            },
+            {
+              name: 'Caesar Vance',
+              position: 'Pre-Sales Support',
+              office: 'New York',
+              age: '21',
+              date: '2011/12/12',
+              salary: '106'
+            },
+            {
+              name: 'Doris Wilder',
+              position: 'Sales Assistant',
+              office: 'Sidney',
+              age: '23',
+              date: '2010/09/20',
+              salary: '85'
+            },
+            {
+              name: 'Angelica Ramos',
+              position: 'Chief Executive Officer (CEO)',
+              office: 'London',
+              age: '47',
+              date: '2009/10/09',
+              salary: '1'
+            },
+            {
+              name: 'Gavin Joyce',
+              position: 'Developer',
+              office: 'Edinburgh',
+              age: '42',
+              date: '2010/12/22',
+              salary: '92'
+            },
+            {
+              name: 'Jennifer Chang',
+              position: 'Regional Director',
+              office: 'Singapore',
+              age: '28',
+              date: '2010/11/14',
+              salary: '357'
+            },
+            {
+              name: 'Brenden Wagner',
+              position: 'Software Engineer',
+              office: 'San Francisco',
+              age: '28',
+              date: '2011/06/07',
+              salary: '206'
+            },
+            {
+              name: 'Fiona Green',
+              position: 'Chief Operating Officer (COO)',
+              office: 'San Francisco',
+              age: '48',
+              date: '2010/03/11',
+              salary: '850'
+            },
+            {
+              name: 'Shou Itou',
+              position: 'Regional Marketing',
+              office: 'Tokyo',
+              age: '20',
+              date: '2011/08/14',
+              salary: '163'
+            },
+            {
+              name: 'Michelle House',
+              position: 'Integration Specialist',
+              office: 'Sidney',
+              age: '37',
+              date: '2011/06/02',
+              salary: '95'
+            },
+            {
+              name: 'Suki Burks',
+              position: 'Developer',
+              office: 'London',
+              age: '53',
+              date: '2009/10/22',
+              salary: '114'
+            },
+            {
+              name: 'Prescott Bartlett',
+              position: 'Technical Author',
+              office: 'London',
+              age: '27',
+              date: '2011/05/07',
+              salary: '145'
+            },
+            {
+              name: 'Gavin Cortez',
+              position: 'Team Leader',
+              office: 'San Francisco',
+              age: '22',
+              date: '2008/10/26',
+              salary: '235'
+            },
+            {
+              name: 'Martena Mccray',
+              position: 'Post-Sales support',
+              office: 'Edinburgh',
+              age: '46',
+              date: '2011/03/09',
+              salary: '324'
+            },
+            {
+              name: 'Unity Butler',
+              position: 'Marketing Designer',
+              office: 'San Francisco',
+              age: '47',
+              date: '2009/12/09',
+              salary: '85'
+            },
+            {
+              name: 'Howard Hatfield',
+              position: 'Office Manager',
+              office: 'San Francisco',
+              age: '51',
+              date: '2008/12/16',
+              salary: '164'
+            },
+            {
+              name: 'Hope Fuentes',
+              position: 'Secretary',
+              office: 'San Francisco',
+              age: '41',
+              date: '2010/02/12',
+              salary: '109'
+            },
+            {
+              name: 'Vivian Harrell',
+              position: 'Financial Controller',
+              office: 'San Francisco',
+              age: '62',
+              date: '2009/02/14',
+              salary: '452'
+            },
+            {
+              name: 'Timothy Mooney',
+              position: 'Office Manager',
+              office: 'London',
+              age: '37',
+              date: '2008/12/11',
+              salary: '136'
+            },
+            {
+              name: 'Jackson Bradshaw',
+              position: 'Director',
+              office: 'New York',
+              age: '65',
+              date: '2008/09/26',
+              salary: '645'
+            },
+            {
+              name: 'Olivia Liang',
+              position: 'Support Engineer',
+              office: 'Singapore',
+              age: '64',
+              date: '2011/02/03',
+              salary: '234'
+            },
+            {
+              name: 'Bruno Nash',
+              position: 'Software Engineer',
+              office: 'London',
+              age: '38',
+              date: '2011/05/03',
+              salary: '163'
+            },
+            {
+              name: 'Sakura Yamamoto',
+              position: 'Support Engineer',
+              office: 'Tokyo',
+              age: '37',
+              date: '2009/08/19',
+              salary: '139'
+            },
+            {
+              name: 'Thor Walton',
+              position: 'Developer',
+              office: 'New York',
+              age: '61',
+              date: '2013/08/11',
+              salary: '98'
+            },
+            {
+              name: 'Finn Camacho',
+              position: 'Support Engineer',
+              office: 'San Francisco',
+              age: '47',
+              date: '2009/07/07',
+              salary: '87'
+            },
+            {
+              name: 'Serge Baldwin',
+              position: 'Data Coordinator',
+              office: 'Singapore',
+              age: '64',
+              date: '2012/04/09',
+              salary: '138'
+            },
+            {
+              name: 'Zenaida Frank',
+              position: 'Software Engineer',
+              office: 'New York',
+              age: '63',
+              date: '2010/01/04',
+              salary: '125'
+            },
+            {
+              name: 'Zorita Serrano',
+              position: 'Software Engineer',
+              office: 'San Francisco',
+              age: '56',
+              date: '2012/06/01',
+              salary: '115'
+            },
+            {
+              name: 'Jennifer Acosta',
+              position: 'Junior Javascript Developer',
+              office: 'Edinburgh',
+              age: '43',
+              date: '2013/02/01',
+              salary: '75'
+            },
+            {
+              name: 'Cara Stevens',
+              position: 'Sales Assistant',
+              office: 'New York',
+              age: '46',
+              date: '2011/12/06',
+              salary: '145'
+            },
+            {
+              name: 'Hermione Butler',
+              position: 'Regional Director',
+              office: 'London',
+              age: '47',
+              date: '2011/03/21',
+              salary: '356'
+            },
+            {
+              name: 'Lael Greer',
+              position: 'Systems Administrator',
+              office: 'London',
+              age: '21',
+              date: '2009/02/27',
+              salary: '103'
+            },
+            {
+              name: 'Jonas Alexander',
+              position: 'Developer',
+              office: 'San Francisco',
+              age: '30',
+              date: '2010/07/14',
+              salary: '86'
+            },
+            {
+              name: 'Shad Decker',
+              position: 'Regional Director',
+              office: 'Edinburgh',
+              age: '51',
+              date: '2008/11/13',
+              salary: '183'
+            },
+            {
+              name: 'Michael Bruce',
+              position: 'Javascript Developer',
+              office: 'Singapore',
+              age: '29',
+              date: '2011/06/27',
+              salary: '183'
+            },
+            {
+              name: 'Donna Snider',
+              position: 'Customer Support',
+              office: 'New York',
+              age: '27',
+              date: '2011/01/25',
+              salary: '112'
+            }
+          ]
+        },
+      message: {
+        cases: "",
+        deaths: "",
+        recovered: ""
+      },
+      
+      chartOptions: {
+        chart: {
+          type: "column"
+          // options3d: {
+          //   enabled: true,
+          //   alpha: 45,
+          // }
+        },
+        title: {
+          text: "Top 10 countries w/ <b>many total deaths</b>"
+        },
+        xAxis: {
+          categories: [],
           title: {
-            text: 'Today Cases'
+            text: "Countries"
+          }
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: "Total",
+            align: "high"
           },
-          xAxis: {
-              categories: [],
-              title: {
-                  text: null
-              }
-          },
-           yAxis: {
-              min: 0,
-              title: {
-                  text: 'Numbers',
-                  align: 'high'
-              },
-              labels: {
-                  overflow: 'justify'
-              }
-          },
+          labels: {
+            overflow: "justify"
+          }
+        },
+        plotOptions: {
+          bar: {
+            dataLabels: {
+              enabled: true
+            }
+          }
+        },
+        credits: {
+          enabled: false
+        },
+        series: [
+          {
+            type: "",
+            name: "Many Total Deaths",
+            data: []
+          }
+        ]
+      },
+      lineChart: {
+        chart: {
+            type: 'spline'
+        },
+        title: {
+          text: 'Top 10 countries w/ <b>many total cases</b>'
+        },  
           plotOptions: {
-              bar: {
-                  dataLabels: {
-                      enabled: true
-                  }
+                    spline: {
+            marker: {
+                radius: 4,
+                lineColor: '#666666',
+                lineWidth: 1
+            }
+        }
+          },
+           xAxis: {
+            categories: [],
+            title: {
+              text: "Countries"
+            }
+          },
+          yAxis: {
+              title: {
+                  text: 'Total'
               }
           },
           credits: {
-              enabled: false
+            enabled: false
           },
           series: [{
-            data: [
-              
-            ],
-             data: [
-              
-            ]
-          }]
-      } 
-       
-      }  
+              name: 'Many Total Cases',
+              data: []
+          }],
+        }
+    };
+  },
+  methods: {
+    allData() {
+      axios
+        .get("https://corona.lmao.ninja/all")
+        .catch(err => console.log(err))
+        .then(data => {
+          this.message = data.data;
+        });
     },
-    methods: {
-      allData() {
-        axios.get('https://corona.lmao.ninja/all').catch(err => console.log(err)).then(data => {
-            this.message = data.data;
-        })
-      },
-      ChartTotalCasesInEachCountry() {
-        axios.get('https://corona.lmao.ninja/countries').catch(err => console.log(err)).then(data => {
-            var samp = data.data;
-            for(var i=0; i < data.data.length; i++){
-                console.log(Object.keys(samp).map(i => samp[i].todayCases));
-                this.chartOptions.xAxis.categories = Object.keys(samp).map(i => samp[i].country);
-                this.chartOptions.series[0].data = Object.keys(samp).map(i => samp[i].cases);
-              this.chartOptions.series[1].data = Object.keys(samp).map(i => samp[i].todayCases);
-            }
-        })
-     //   console.log(this.chartOptions.series[0].data);
-      },
-      formatPrice(value) {
-        let val = (value/1).toFixed(0).replace(',', '.')
-        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-      }
+    ChartTotalDeathInEachCountry() {
+      axios
+        .get("https://corona.lmao.ninja/countries?sort=deaths")
+        .catch(err => console.log(err))
+        .then(data => {
+          var samp = data.data;
+          var indexes = Object.keys(samp).map(i => i); //getonly index
+          var table_data = {
+            countries: [],
+            deaths: []
+          };
+
+          for (var i = 0; i < 10; i++) {
+            table_data.countries.push(samp[indexes[i]].country);
+            table_data.deaths.push(samp[indexes[i]].deaths);
+          }
+
+          //this will set the data
+
+          this.chartOptions.xAxis.categories = table_data.countries;
+          this.chartOptions.series[0].data = table_data.deaths;
+          
+        });
     },
-    mounted(){
-      this.allData();
-      this.ChartTotalCasesInEachCountry();
+    ChartTotalCasesInEachCountry() {
+      axios
+        .get("https://corona.lmao.ninja/countries?sort=cases")
+        .catch(err => console.log(err))
+        .then(data => {
+          var samp = data.data;
+          var indexes = Object.keys(samp).map(i => i); //getonly index
+          var table_data = {
+            countries: [],
+            cases: []
+          };
+
+          for (var i = 0; i < 10; i++) {
+            table_data.countries.push(samp[indexes[i]].country);
+            table_data.cases.push(samp[indexes[i]].cases);
+          }
+
+          //this will set the data
+
+          this.lineChart.xAxis.categories = table_data.countries;
+         //console.log(table_data.countries[0]);
+          this.lineChart.series[0].data = table_data.cases;
+          
+        });
+    },
+    formatPrice(value) {
+      let val = (value / 1).toFixed(0).replace(",", ".");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
-}
+  },
+  mounted() {
+    this.allData();
+    this.ChartTotalDeathInEachCountry();
+     this.ChartTotalCasesInEachCountry();
+  }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 ul {
