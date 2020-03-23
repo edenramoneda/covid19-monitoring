@@ -1,57 +1,45 @@
 <template>
     <div class="hold-transition layout-top-nav">
       <div class="wrapper">
-          <nav class="main-header navbar navbar-expand navbar-info">
+          <nav class="main-header navbar navbar-expand navbar-info text-center">
             <div class="container">
-                <center><h2 class="text-white">COVID-19 Monitoring</h2></center>
+                <h2 class="text-white">COVID-19 Monitoring</h2>
             </div>
           </nav>
 
-          <div class="content-wrapper">
+          <div class="content-wrapper bg-dark">
             <div class="content">
               <div class="container bg-white">
-                <div class="container-fluid">
-                  <div class="row">
-                    <div class="col-lg-3 col-6 mt-3">
+                <div class="container">
+                  <div class="row" style="margin-left:15%">
+                    <div class="col-lg-3 col-12 mt-3">
                       <!-- small box -->
-                      <div class="small-box bg-info">
+                      <div class="small-box text-white" style="background-color:#ff4d4d">
                         <div class="inner">
-                          <h3> <money v-model="message.cases" v-bind="money"></money>{{ message.cases }}</h3>{{ message.cases }}
-
-                          <p>New Orders</p>
+                          <h4>{{ formatPrice(message.cases) }} </h4>
+                          <p>Cases</p> 
                         </div>
-                        <div class="icon">
-                          <i class="ion ion-bag"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                          <img src="@/assets/doctors_bag.png" style="right:15px;top:10px;position:absolute">
                       </div>
                     </div>
-                    <div class="col-lg-3 col-6 mt-3">
+                    <div class="col-lg-3 col-12 mt-3">
                       <!-- small box -->
                       <div class="small-box bg-success">
                         <div class="inner">
-                          <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                          <p>Bounce Rate</p>
+                         <h4>{{ formatPrice(message.deaths) }} </h4>
+                          <p>Deaths</p> 
                         </div>
-                        <div class="icon">
-                          <i class="ion ion-stats-bars"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                         <img src="@/assets/empty_bed.png" style="right:15px;top:10px;position:absolute">
                       </div>
                     </div>
-                    <div class="col-lg-3 col-6 mt-3">
+                    <div class="col-lg-3 col-12 mt-3">
                       <!-- small box -->
-                      <div class="small-box bg-warning">
-                        <div class="inner">
-                          <h3>44</h3>
-
-                          <p>User Registrations</p>
+                      <div class="small-box text-white">
+                        <div class="inner" style="background-color:#00cc99">
+                          <h4>{{ formatPrice(message.recovered) }} </h4>
+                          <p>Recovered</p> 
                         </div>
-                        <div class="icon">
-                          <i class="ion ion-person-add"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                         <img src="@/assets/recovery.png" style="right:15px;top:10px;position:absolute">
                       </div>
                     </div>
                   </div>
@@ -68,23 +56,15 @@
 </style>
 
 <script>
-  import axios from 'axios'
+import axios from 'axios'
 import VueAxios from 'vue-axios'
- import {Money} from 'v-money'
+import MoneyFormat from 'vue-money-format'
 export default {
-      components: {Money},
-    data() {
+    data(){
       return {
         message: {
           cases: "",
-          money: {
-          decimal: ',',
-          thousands: '.',
-          prefix: 'R$ ',
-          suffix: ' #',
-          precision: 2,
-          masked: false
-        }
+          deaths: "",
         }
       }  
     },
@@ -93,6 +73,10 @@ export default {
         axios.get('https://corona.lmao.ninja/all').catch(err => console.log(err)).then(data => {
             this.message = data.data;
         })
+      },
+      formatPrice(value) {
+        let val = (value/1).toFixed(0).replace(',', '.')
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
       }
     },
     mounted(){
