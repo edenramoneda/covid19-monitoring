@@ -18,7 +18,7 @@
                       <div class="small-box text-white" style="background-color:#ff4d4d">
                         <div class="inner">
                           <h4>{{ formatPrice(message.cases) }} </h4>
-                          <p>Cases</p>
+                          <p>Total Cases</p>
                         </div>
                           <img src="@/assets/doctors_bag.png" style="right:15px;top:10px;position:absolute">
                       </div>
@@ -28,7 +28,7 @@
                       <div class="small-box bg-success">
                         <div class="inner">
                          <h4>{{ formatPrice(message.deaths) }} </h4>
-                          <p>Deaths</p>
+                          <p>Total Deaths</p>
                         </div>
                          <img src="@/assets/empty_bed.png" style="right:15px;top:10px;position:absolute">
                       </div>
@@ -38,7 +38,7 @@
                       <div class="small-box text-white">
                         <div class="inner" style="background-color:#00cc99">
                           <h4>{{ formatPrice(message.recovered) }} </h4>
-                          <p>Recovered</p>
+                          <p>Total Recovered</p>
                         </div>
                          <img src="@/assets/recovery.png" style="right:15px;top:10px;position:absolute">
                       </div>
@@ -46,8 +46,8 @@
                   </div>
                   <br>
                   <div class="row">
-                    <div class="col-lg-6 col-12">
-                      <charts :options="chartOptions"></charts>
+                    <div class="col-lg-12 col-12">
+                      <charts :options="chartOptions" style="height: 900px"></charts>
                     </div>
                   </div>
                 </div>
@@ -66,9 +66,6 @@
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import MoneyFormat from 'vue-money-format'
-
-
-
 export default {
 
     data(){
@@ -76,6 +73,7 @@ export default {
         message: {
           cases: "",
           deaths: "",
+          recovered: "",
         },   
         chartOptions: {
           chart: {
@@ -84,8 +82,39 @@ export default {
           title: {
             text: 'Today Cases'
           },
+          xAxis: {
+              categories: [],
+              title: {
+                  text: null
+              }
+          },
+           yAxis: {
+              min: 0,
+              title: {
+                  text: 'Numbers',
+                  align: 'high'
+              },
+              labels: {
+                  overflow: 'justify'
+              }
+          },
+          plotOptions: {
+              bar: {
+                  dataLabels: {
+                      enabled: true
+                  }
+              }
+          },
+          credits: {
+              enabled: false
+          },
           series: [{
-            data: [1,2,3] // sample data
+            data: [
+              
+            ],
+             data: [
+              
+            ]
           }]
       } 
        
@@ -97,10 +126,17 @@ export default {
             this.message = data.data;
         })
       },
-      allData() {
-        axios.get('https://corona.lmao.ninja/all').catch(err => console.log(err)).then(data => {
-            this.message = data.data;
+      ChartTotalCasesInEachCountry() {
+        axios.get('https://corona.lmao.ninja/countries').catch(err => console.log(err)).then(data => {
+            var samp = data.data;
+            for(var i=0; i < data.data.length; i++){
+                console.log(Object.keys(samp).map(i => samp[i].todayCases));
+                this.chartOptions.xAxis.categories = Object.keys(samp).map(i => samp[i].country);
+                this.chartOptions.series[0].data = Object.keys(samp).map(i => samp[i].cases);
+              this.chartOptions.series[1].data = Object.keys(samp).map(i => samp[i].todayCases);
+            }
         })
+     //   console.log(this.chartOptions.series[0].data);
       },
       formatPrice(value) {
         let val = (value/1).toFixed(0).replace(',', '.')
@@ -109,6 +145,7 @@ export default {
     },
     mounted(){
       this.allData();
+      this.ChartTotalCasesInEachCountry();
     }
 }
 </script>
