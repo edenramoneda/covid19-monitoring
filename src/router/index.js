@@ -1,4 +1,7 @@
 /* eslint-disable */ 
+require("bootstrap-css-only/css/bootstrap.min.css");
+require("mdbvue/lib/css/mdb.min.css");
+require("@fortawesome/fontawesome-free/css/all.min.css");
 import Router from 'vue-router'
 import Index from '@/components/Index'
 import Vue from 'vue'
@@ -11,6 +14,12 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import Highcharts from "highcharts";
 import Highcharts3d from "highcharts/highcharts-3d";
 import HighchartsVue from 'highcharts-vue'
+import { VuejsDatatableFactory } from 'vuejs-datatable';
+import * as mdbvue from 'mdbvue'
+for (const component in mdbvue) {
+  Vue.component(component, mdbvue[component])
+}
+Vue.use( VuejsDatatableFactory );
 Highcharts3d(Highcharts);
 Vue.use(HighchartsVue, {tagName: 'charts'})
 Vue.use(Router)
