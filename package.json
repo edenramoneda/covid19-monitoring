@@ -21,7 +21,8 @@
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
     "vue-money-format": "^1.1.1",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuejs-datatable": "^2.0.0-alpha.7"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

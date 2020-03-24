@@ -5,6 +5,7 @@
           <div class="content-wrapper custom-container">
             <div class="content">
               <div class="container custom-container-2">
+                <h2 class="text-white text-center"><b>COVID-19</b> Tracker</h2><br>
                 <div class="container-fluid">
                   <div class="row" style="margin-left:15%">
                     <div class="col-lg-3 col-12 mt-3">
@@ -69,8 +70,10 @@
     #26d0ce,
     #1a2980
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  height:100vh;
 }
 .custom-container-2 {
+  height:100vh;
   background: #1a2980; /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to top,
@@ -110,7 +113,7 @@ export default {
           // }
         },
         title: {
-          text: "Top 10 countries w/ many total deaths"
+          text: "Top 10 countries w/ <b>many total deaths</b>"
         },
         xAxis: {
           categories: [],
@@ -151,7 +154,7 @@ export default {
             type: 'spline'
         },
          title: {
-            text: 'Top 10 countries w/ many total cases'
+            text: 'Top 10 countries w/ <b>many total cases</b>'
           },
           
           plotOptions: {
@@ -164,7 +167,10 @@ export default {
         }
           },
            xAxis: {
-            categories: []
+            categories: [],
+            title: {
+              text: "Countries"
+            }
           },
           yAxis: {
               title: {
