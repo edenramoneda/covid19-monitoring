@@ -8,8 +8,10 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 //import VueAdminLte from '@cookieseater/vue-adminlte3'
 
 //Vue.use(VueAdminLte, {/* options */});
+import Highcharts from "highcharts";
+import Highcharts3d from "highcharts/highcharts-3d";
 import HighchartsVue from 'highcharts-vue'
-
+Highcharts3d(Highcharts);
 Vue.use(HighchartsVue, {tagName: 'charts'})
 Vue.use(Router)
 Vue.use(BootstrapVue)
