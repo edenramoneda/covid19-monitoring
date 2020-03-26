@@ -5,7 +5,8 @@
           <div class="content-wrapper custom-container">
             <div class="content">
               <div class="container custom-container-2">
-                <h2 class="text-white text-center"><b>COVID-19</b> Tracker</h2><br>
+                <h2 class="text-white text-center"><b>COVID-19</b> Tracker</h2>
+                <h6 class="text-white text-center">Developed by: Eden Ramoneda</h6><br>
                 <div class="container-fluid">
                   <div class="row" style="margin-left:15%">
                     <div class="col-lg-3 col-12 mt-3">
@@ -77,34 +78,16 @@
 @import "admin-lte/dist/css/adminlte.css";
 
 .custom-container {
-  background: #1a2980; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to top,
-    #26d0ce,
-    #1a2980
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to top,
-    #26d0ce,
-    #1a2980
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-image:url('../assets/earth.jpg');
+  background-repeat: no-repeat;
   height:100vh;
-  overflow-y: scroll;
+  width:100%;
+  background-size: cover;
 }
 .custom-container-2 {
+  
   height:100vh;
-  background: #1a2980; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to top,
-    #26d0ce,
-    #1a2980
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to top,
-    #26d0ce,
-    #1a2980
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+  background-color: transparent;
   -webkit-box-shadow: 0px -1px 11px 5px rgba(0, 0, 0, 0.73);
   -moz-box-shadow: 0px -1px 11px 5px rgba(0, 0, 0, 0.73);
   box-shadow: 0px -1px 11px 5px rgba(0, 0, 0, 0.73);
