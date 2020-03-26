@@ -33,7 +33,11 @@ export default new Router({
     {
       path: '/',
       name: 'Index',
-      component: Index
+      component: Index,
+      meta: {
+        auth: false,
+        title: 'Rams Covid-19 Tracker'
+      }
     }
   ]
 })
