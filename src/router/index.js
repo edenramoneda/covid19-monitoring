@@ -36,7 +36,7 @@ export default new Router({
       component: Index,
       meta: {
         auth: false,
-        title: 'Rams Covid-19 Tracker'
+        title: 'COVID-19 Analytics'
       }
     }
   ]

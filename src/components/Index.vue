@@ -5,8 +5,7 @@
           <div class="content-wrapper custom-container">
             <div class="content">
               <div class="container custom-container-2">
-                <h2 class="text-white text-center"><b>COVID-19</b> Tracker</h2>
-                <h6 class="text-white text-center">Developed by: Eden Ramoneda</h6>
+                <h2 class="text-white text-center"><b>COVID-19</b> Analytics</h2>
                 <h6 class="text-white text-center">Credits: <a href="https://github.com/NovelCOVID/API">https://github.com/NovelCOVID/API</a></h6><br>
                 <div class="container-fluid">
                   <div class="row" style="margin-left:15%">
@@ -214,7 +213,7 @@ export default {
   methods: {
     allData() {
       axios
-        .get("https://corona.lmao.ninja/all")
+        .get("https://corona.lmao.ninja/v2/all")
         .catch(err => console.log(err))
         .then(data => {
           this.message = data.data;
@@ -222,7 +221,7 @@ export default {
     },
     ChartTotalDeathInEachCountry() {
       axios
-        .get("https://corona.lmao.ninja/countries?sort=deaths")
+        .get("https://corona.lmao.ninja/v2/countries?sort=deaths")
         .catch(err => console.log(err))
         .then(data => {
           var samp = data.data;
@@ -246,7 +245,7 @@ export default {
     },
     ChartTotalCasesInEachCountry() {
       axios
-        .get("https://corona.lmao.ninja/countries?sort=cases")
+        .get("https://corona.lmao.ninja/v2/countries?sort=cases")
         .catch(err => console.log(err))
         .then(data => {
           var samp = data.data;
@@ -271,7 +270,7 @@ export default {
     },
     LoadAllData(){
       axios
-        .get("https://corona.lmao.ninja/countries?sort=cases")
+        .get("https://corona.lmao.ninja/v2/countries?sort=cases")
         .catch(err => console.log(err))
         .then(data => {
           for(var i=0; i<data.data.length; i++)  {
