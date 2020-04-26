@@ -211,6 +211,7 @@ export default {
     };
   },
   methods: {
+    
     allData() {
       axios
         .get("https://corona.lmao.ninja/v2/all")
