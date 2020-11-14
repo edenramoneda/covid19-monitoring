@@ -14,8 +14,6 @@ Vue.component('l-circle', LCircle);
 Vue.component('l-popup', LPopup);
 Vue.config.productionTip = false
 
-
-
 delete Icon.Default.prototype._getIconUrl;
 Icon.Default.mergeOptions({
   iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
