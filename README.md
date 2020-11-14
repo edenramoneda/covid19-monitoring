@@ -1,4 +1,4 @@
-# novelcovidvue
+# COVID-19 Monitoring
 
 > A project for Covid-19 cases and more stuff
 
