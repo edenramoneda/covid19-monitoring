@@ -24,13 +24,17 @@
       v-for="circle in circles"
       :key="circle.id"
       :lat-lng="circle.center"
-      :radius="circle.radius"
       :color="circle.color"
     >
       <l-popup>
-        <img :src="circle.flag" width="40" height="30" style="border:1px solid #cccccc">
+        <img :src="circle.flag" width="50" height="30" style="border:1px solid #cccccc">
         <b>{{ circle.country}}</b><br>
-        <p><b>Total Cases:</b>{{ circle.cases}}</p>
+        <p>
+          <b>Cases:</b>{{ circle.cases}}<br>
+          <b>Recovered:</b>{{ circle.recovered}}<br>
+          <b>Deaths:</b>{{ circle.deaths}}<br>
+          <b>Active:</b>{{ circle.active}}
+        </p>
       </l-popup>
     </l-marker>
     </l-map>
@@ -45,6 +49,7 @@
 import { latLngBounds, latLng } from "leaflet";
 import axios from 'axios'
 export default {
+  title: 'COVID-19 Monitoring',
   data () {
     return {
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -82,11 +87,13 @@ export default {
           this.circles.push({
             id: number += 1,
             center: [d.countryInfo.lat,d.countryInfo.long],
-            radius: d.population  - d.cases,
             color: 'red',
             country: d.country,
             flag: d.countryInfo.flag,
-            cases: this.formatNumbers(d.cases)
+            cases: this.formatNumbers(d.cases),
+            recovered: this.formatNumbers(d.recovered),
+            deaths: this.formatNumbers(d.cases),
+            active: this.formatNumbers(d.active),
           })
         });
       }).catch((err) => {

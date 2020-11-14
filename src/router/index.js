@@ -42,7 +42,7 @@ export default new Router({
       component: Index,
       meta: {
         auth: false,
-        title: 'COVID-19 Analytics'
+        title: 'COVID-19 Monitoring'
       }
     }
   ]
