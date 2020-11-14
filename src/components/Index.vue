@@ -2,7 +2,7 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-sm-12 col-md-2">
+      <div class="col-sm-12 col-md-2 con">
         <div class="container p-3">
           <div class="details">
               <div class="small-box text-white" style="background-color:#ff5050;">
@@ -23,11 +23,19 @@
                   <h5>{{ totalDeaths }} </h5>
                 </div>
               </div>
+
+              <b-list-group>
+                <p class="text-white"><b>Top 10 Countries w/ many cases</b></p>
+                <b-list-group-item v-for="pbars in pbar" :key="pbars.id" class="d-flex justify-content-between align-items-center">
+                  {{ pbars.country }}
+                  <b-badge variant="danger" pill> {{ pbars.value}} </b-badge>
+                </b-list-group-item>
+              </b-list-group>
           </div>
         </div>
       </div>
       <div class="col-sm-12 col-md-10">
-        <div style="height: 100vh; width: 100%" class="con">
+        <div style="height: 100vh; width: 100%">
           <l-map
             style="height: 100%; width: 100%"
             :zoom="zoom"
@@ -46,6 +54,7 @@
               :key="circle.id"
               :lat-lng="circle.center"
               :color="circle.color"
+              :icon="icon"
             >
               <l-popup>
                 <img :src="circle.flag" width="50" height="30" style="border:1px solid #cccccc">
@@ -66,13 +75,14 @@
 </template>
 <style scoped>
 @import "admin-lte/dist/css/adminlte.css";
+@import "//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css";
 .con{
  /*background-color: #AAD3DF; */
- background-color: #fff;
+ background-color: #343a40;
 }
 </style>
 <script>
-import { latLngBounds, latLng } from "leaflet";
+import { latLngBounds, latLng,L,icon } from "leaflet";
 import axios from 'axios'
 
 export default {
@@ -94,14 +104,32 @@ export default {
       circles: [],
       totalCases: "",
       totalDeaths: "",
-      totalRecovered: ""
+      totalRecovered: "",
+      pbar: [],
+      icon: icon({
+        iconUrl: require('../assets/Coronavirus.png') ,
+        iconSize: [32, 37],
+        iconAnchor: [16, 37]
+      }),
     };
   },
+  // computed: {
+  //   dynamicSize () {
+  //     return [this.iconSize, this.iconSize * 1.15];
+  //   },
+  //   dynamicAnchor () {
+  //     return [this.iconSize / 2, this.iconSize * 1.15];
+  //   }
+  // },
   created() {
     this.getAllData();
     this.totalData();
+    this.ChartTotalCasesInEachCountry();
   },
   methods: {
+    randomValue() {
+      this.value = Math.random() * this.max
+    },
     zoomUpdated (zoom) {
       this.zoom = zoom;
     },
@@ -143,7 +171,22 @@ export default {
       }).catch((err) => {
         //console.log(err);
       })
-    }
+    },
+    ChartTotalCasesInEachCountry() {
+      axios
+        .get("https://disease.sh/v3/covid-19/countries?sort=cases")
+        .catch(err => console.log(err))
+        .then(data => {
+          var inc = 0;
+          for (var i = 0; i < 10; i++) {
+            this.pbar.push({
+              id: inc +=1,
+              value: this.formatNumbers(data.data[i].cases),
+              country: data.data[i].country
+            });
+          }
+        });
+    },
   },
 
 }

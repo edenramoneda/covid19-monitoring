@@ -3,15 +3,21 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import { LMap, LTileLayer, LMarker,LCircle,LPopup } from 'vue2-leaflet';
+import { LMap, LTileLayer, LMarker,LCircle,LPopup,LIcon } from 'vue2-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Icon } from 'leaflet';
+import HighchartsVue from 'highcharts-vue'
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 
 Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);
 Vue.component('l-marker', LMarker);
 Vue.component('l-circle', LCircle);
 Vue.component('l-popup', LPopup);
+Vue.component('l-icon', LIcon);
+Vue.use(HighchartsVue, {tagName: 'charts'})
+Vue.use(BootstrapVue)
+Vue.use(BootstrapVueIcons)
 Vue.config.productionTip = false
 
 delete Icon.Default.prototype._getIconUrl;
