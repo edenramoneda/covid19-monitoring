@@ -30,7 +30,8 @@
                   {{ pbars.country }}
                   <b-badge variant="danger" pill> {{ pbars.value}} </b-badge>
                 </b-list-group-item>
-              </b-list-group>
+              </b-list-group><br>
+              <a href="https://github.com/NovelCOVID/API" class="text-white">Credits: https://github.com/NovelCOVID/API </a>
           </div>
         </div>
       </div>
@@ -48,7 +49,7 @@
             @update:center="centerUpdated"
             @update:bounds="boundsUpdated"
           >
-            <l-tile-layer :url="url"></l-tile-layer>
+            <l-tile-layer :url="url" :noWrap="noWrap" :attributionControl="attributionControl"></l-tile-layer>
             <l-marker
               v-for="circle in circles"
               :key="circle.id"
@@ -82,7 +83,7 @@
 }
 </style>
 <script>
-import { latLngBounds, latLng,L,icon } from "leaflet";
+import { latLngBounds, latLng,L,icon,control } from "leaflet";
 import axios from 'axios'
 
 export default {
@@ -111,6 +112,8 @@ export default {
         iconSize: [32, 37],
         iconAnchor: [16, 37]
       }),
+      noWrap: true,
+      attributionControl: false
     };
   },
   // computed: {
