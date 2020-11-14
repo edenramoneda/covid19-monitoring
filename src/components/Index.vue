@@ -154,7 +154,7 @@ export default {
             flag: d.countryInfo.flag,
             cases: this.formatNumbers(d.cases),
             recovered: this.formatNumbers(d.recovered),
-            deaths: this.formatNumbers(d.cases),
+            deaths: this.formatNumbers(d.deaths),
             active: this.formatNumbers(d.active),
           })
         });
