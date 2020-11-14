@@ -20,17 +20,27 @@
       @update:bounds="boundsUpdated"
     >
     <l-tile-layer :url="url"></l-tile-layer>
-    <l-circle
+    <l-marker
       v-for="circle in circles"
       :key="circle.id"
       :lat-lng="circle.center"
       :radius="circle.radius"
       :color="circle.color"
-    />
+    >
+      <l-popup>
+        <img :src="circle.flag" width="40" height="30" style="border:1px solid #cccccc">
+        <b>{{ circle.country}}</b><br>
+        <p><b>Total Cases:</b>{{ circle.cases}}</p>
+      </l-popup>
+    </l-marker>
     </l-map>
   </div>
 </template>
-
+<style scoped>
+.leaflet-popup-content{
+  width:15rem!important;
+}
+</style>
 <script>
 import { latLngBounds, latLng } from "leaflet";
 import axios from 'axios'
@@ -49,16 +59,7 @@ export default {
         [-84.72233856539854, -180],
         [85.06500754829302, 180.17578125]
       ]),
-      circles: 
-        [
-          // {
-          //   id: 0,
-          //   center: [32.53952745, -86.64408227],
-          //   radius: 404713,
-          //   color: 'red'
-          // }
-        ]
-      
+      circles: []
     };
   },
   created() {
@@ -75,19 +76,26 @@ export default {
       this.bounds = bounds;
     },
     getAllData(){
-      axios.get('https://disease.sh/v3/covid-19/jhucsse').then((response) => {
+      axios.get('https://disease.sh/v3/covid-19/countries').then((response) => {
         var number = 0;
         response.data.forEach(d => {
           this.circles.push({
             id: number += 1,
-            center: [d.coordinates.latitude,d.coordinates.longitude],
-            radius: d.stats.confirmed,
-            color: 'red'
+            center: [d.countryInfo.lat,d.countryInfo.long],
+            radius: d.population  - d.cases,
+            color: 'red',
+            country: d.country,
+            flag: d.countryInfo.flag,
+            cases: this.formatNumbers(d.cases)
           })
         });
       }).catch((err) => {
-        console.log(err);
+        //console.log(err);
       })
+    },
+    formatNumbers(value) {
+      let val = (value / 1).toFixed(0).replace(",", ".");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
   },
 
