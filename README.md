@@ -4,7 +4,7 @@
 
 ## Build Setup
 
-![Link](ramscovid19tracker.herokuapp.com)
+![ramscovid19tracker.herokuapp.com](ramscovid19tracker.herokuapp.com)
 ``` bash
 # install dependencies
 npm install
