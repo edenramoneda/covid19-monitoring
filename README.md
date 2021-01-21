@@ -2,9 +2,9 @@
 
 # TECHNOLOGY USED
 
-VueJS
-API
-Leaflet JS
+* VueJS
+* API
+* Leaflet JS
 
 ## DEMO
 
