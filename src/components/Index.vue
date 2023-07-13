@@ -7,20 +7,20 @@
           <div class="details">
               <div class="small-box text-white" style="background-color:#ff5050;">
                 <div class="inner">
-                  <h4><b>Total Cases</b></h4>
-                  <h5>{{ totalCases }} </h5>
+                  <h6><b>Total Cases</b></h6>
+                  <p>{{ totalCases }} </p>
                 </div>
               </div>
               <div class="small-box text-white bg-success">
                 <div class="inner">
-                  <h4><b>Total Recovered</b></h4>
-                  <h5>{{ totalRecovered }} </h5>
+                  <h6><b>Total Recovered</b></h6>
+                  <p>{{ totalRecovered }} </p>
                 </div>
               </div>
               <div class="small-box text-white bg-danger">
                 <div class="inner">
-                  <h4><b>Total Deaths</b></h4>
-                  <h5>{{ totalDeaths }} </h5>
+                  <h6><b>Total Deaths</b></h6>
+                  <p>{{ totalDeaths }} </p>
                 </div>
               </div>
 
@@ -31,7 +31,7 @@
                   <b-badge variant="danger" pill> {{ pbars.value}} </b-badge>
                 </b-list-group-item>
               </b-list-group><br>
-              <a href="https://github.com/NovelCOVID/API" class="text-white">Credits: https://github.com/NovelCOVID/API </a>
+    
           </div>
         </div>
       </div>
@@ -80,6 +80,8 @@
 .con{
  /*background-color: #AAD3DF; */
  background-color: #343a40;
+ height: 100vh;
+ overflow-y: scroll;
 }
 </style>
 <script>
